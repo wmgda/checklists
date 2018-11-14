@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { fire } from './fire';
+import CheckList from './components/checklist/checklist';
+import {Heading} from 'react-bulma-components';
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      checklists: [],
+    }
+  }
+
   componentDidMount() {
-    console.log('xd');
     const db = fire.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
-    const userRef = db.collection('/checklists');
-    console.log(userRef);
-    userRef.get()
+    const checklistsRef = db.collection('/checklists');
+    checklistsRef.get()
       .then((data) => {
-        console.log(data.docs);
         data.forEach(val => {
-          console.log(val);
+          const data = val.data();
+          console.log(data);
+          this.setState({ checklists: [...this.state.checklists, data]});
         })
       })
   }
 
   render() {
+    const {checklists} = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Heading>Title</Heading>
+        <CheckList list={checklists}/>
       </div>
     );
   }

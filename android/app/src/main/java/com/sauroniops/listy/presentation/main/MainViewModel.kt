@@ -19,6 +19,7 @@ class MainViewModel(
     private val subscriptions = CompositeDisposable()
 
     fun search(query: String) {
+        subscriptions.clear()
         repo.search(query).subscribe({ items ->
             this.results.value = items
             this.error.value = null

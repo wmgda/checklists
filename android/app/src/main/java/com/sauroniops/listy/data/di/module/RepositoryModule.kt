@@ -10,7 +10,7 @@ import org.kodein.di.generic.singleton
 val repositoryModule = Kodein.Module(name = "RepositoryModule") {
 
     bind<ChecklistRepository>() with singleton {
-        ChecklistRepositoryImpl(instance())
+        ChecklistRepositoryImpl(instance(), instance())
     }
 
 }

@@ -17,7 +17,6 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemChangedListener {
 
@@ -32,14 +31,17 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCha
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_activity)
 
+        initViewModel()
+        setupView()
+        registerObservers()
+    }
+
+    private fun initViewModel() {
         val extras = intent.extras ?: Bundle()
         val id = extras.getString(ID, "")
         val title = extras.getString(TITLE, "")
 
         viewModel.init(id, title)
-
-        setupView()
-        registerObservers()
     }
 
     private fun setupView() {
@@ -58,7 +60,7 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCha
     }
 
     override fun onItemChange(item: ChecklistItem, isChecked: Boolean) {
-        Timber.e("FunName:onItemClick *****${item.title} | isChecked=$isChecked*****")
+        viewModel.toggleCheckbox(item.id ?: "", isChecked)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

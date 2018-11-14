@@ -23,8 +23,13 @@ class ItemViewModel(
         fetch()
     }
 
-    fun toggle(id: String, isChecked: Boolean) {
-        // here the magic ...
+    fun toggleCheckbox(checkboxId: String, isChecked: Boolean) {
+        repo.updateChecked(id, checkboxId, isChecked).subscribe({ item ->
+            this.model.value = item
+            this.error.value = null
+        }, { err ->
+            this.error.value = err
+        }).addTo(subscriptions)
     }
 
     private fun fetch() {
@@ -35,5 +40,4 @@ class ItemViewModel(
             this.error.value = err
         }).addTo(subscriptions)
     }
-
 }

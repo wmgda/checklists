@@ -51,6 +51,7 @@ class ItemListAdapter(
 
         fun bind(item: ChecklistItem, position: Int) {
             checkBox.text = item.title
+            checkBox.isChecked = item.isChecked
             checkBox.tag = position
         }
     }

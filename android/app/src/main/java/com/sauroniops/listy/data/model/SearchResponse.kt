@@ -1,7 +1,6 @@
 package com.sauroniops.listy.data.model
 
-data class SearchResponse(val hits: List<SearchResults>) {
+data class SearchResponse(val hits: List<Checklist>) {
 
-    fun getItems(): List<Checklist> = hits.firstOrNull()?.items ?: emptyList()
 
 }

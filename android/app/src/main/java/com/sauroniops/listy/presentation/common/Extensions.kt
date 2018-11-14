@@ -1,4 +1,4 @@
-package com.sauroniops.listy.presentation
+package com.sauroniops.listy.presentation.common
 
 import android.view.LayoutInflater
 import android.view.View

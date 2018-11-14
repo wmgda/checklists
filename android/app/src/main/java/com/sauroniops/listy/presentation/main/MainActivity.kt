@@ -2,7 +2,6 @@ package com.sauroniops.listy.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
@@ -78,9 +77,9 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
     }
 
     override fun onItemClick(item: Checklist) {
-        val intent = Intent(this, ItemActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, item.id)
-        }
+        val intent = Intent(this, ItemActivity::class.java)
+        intent.putExtras(ItemActivity.createBundle(item))
+
         startActivity(intent)
     }
 }

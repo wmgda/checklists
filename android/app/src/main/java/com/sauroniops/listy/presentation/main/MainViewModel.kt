@@ -1,22 +1,19 @@
 package com.sauroniops.listy.presentation.main
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.sauroniops.listy.data.model.Checklist
 import com.sauroniops.listy.data.repository.ChecklistRepository
-import com.sauroniops.listy.presentation.addTo
-import io.reactivex.disposables.CompositeDisposable
+import com.sauroniops.listy.presentation.common.BaseViewModel
+import com.sauroniops.listy.presentation.common.addTo
 
 class MainViewModel(
     private val repo: ChecklistRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     val results: MutableLiveData<List<Checklist>> by lazy {
         MutableLiveData<List<Checklist>>().apply { search("") }
     }
     val error = MutableLiveData<Throwable?>()
-
-    private val subscriptions = CompositeDisposable()
 
     fun search(query: String) {
         subscriptions.clear()
@@ -26,10 +23,5 @@ class MainViewModel(
         }, { err ->
             this.error.value = err
         }).addTo(subscriptions)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        subscriptions.clear()
     }
 }

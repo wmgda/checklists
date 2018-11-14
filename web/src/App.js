@@ -67,6 +67,17 @@ class App extends Component {
     return viewFactory(opt);
   };
 
+  handleEdit = (form) => {
+    form.objectId = form.id;
+    const db = fire.firestore();
+    index.saveObject(form, () => {
+      console.log('added');
+      setTimeout(() => {
+        this.setState({currentSelected: 'list'})
+      }, 2000)
+    })
+  };
+
   save = (form) => {
     const r = Math.random().toString(36).substring(7);
     form.id = r;
@@ -80,7 +91,7 @@ class App extends Component {
             console.log('added');
             setTimeout(() => {
               this.setState({currentSelected: 'list'})
-            }, 1000)
+            }, 2000)
           })
         });
       });
@@ -107,11 +118,11 @@ class App extends Component {
   checkListSingle = (opt) => {
     const item = this.state.checklists.find(item => item.id === this.state.id);
     return (
-      <CheckListSingleView item={item}  onPress={() => {
+      <CheckListSingleView item={item} edit={this.handleEdit}  return={() => {
         this.setState({currentSelected: 'list', id: null})
       }}/>
     );
-  }
+  };
 
   render() {
     return (

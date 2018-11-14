@@ -2,9 +2,9 @@ import React from 'react';
 import {Card, Box, Content, Media} from 'react-bulma-components';
 import {style} from './style';
 
-const CheckListItem = ({item, onPress}) => {
+const CheckListItem = ({item}) => {
     return (
-      <Card style={style} onClick={() => onPress(item.id)}>
+      <Card style={style}>
         <Card.Content>
           <p class="title">
               { item.title } 

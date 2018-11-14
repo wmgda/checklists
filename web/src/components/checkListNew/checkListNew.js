@@ -12,7 +12,11 @@ export default class CheckListNew extends Component {
           {title: ''}
         ]
       }
-    }
+    };
+    console.log(this.props);
+    // if (this.props.form) {
+    //   this.setState({form: this.props.form});
+    // }
   }
 
   handleChange = e => {

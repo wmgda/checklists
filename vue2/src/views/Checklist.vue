@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" style="margin-top: 20px">
     <div class="card-content">
     <h1 class="title">{{ checklist.title }}</h1>
 

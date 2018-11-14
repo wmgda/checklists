@@ -1,12 +1,15 @@
 package com.sauroniops.listy.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.Checklist
 import com.sauroniops.listy.data.repository.ChecklistRepository
 import com.sauroniops.listy.presentation.addTo
+import com.sauroniops.listy.presentation.item.ItemActivity
 import com.sauroniops.listy.presentation.main.adapter.MainListAdapter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,30 +27,24 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
     private lateinit var adapter: MainListAdapter
 
     override fun onItemClick(item: Checklist) {
-        Timber.e("FunName:onItemClick *****${item.title} *****")
+        val intent = Intent(this, ItemActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, item.title)
+        }
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = MainListAdapter(
-            listOf(
-                Checklist("1", "List1", listOf()),
-                Checklist("2", "List2", listOf()),
-                Checklist("3", "List3", listOf()),
-                Checklist("4", "List4", listOf()),
-                Checklist("5", "List5", listOf())
-            ),
-            this
-        )
+        adapter = MainListAdapter(emptyList(),this)
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
 
         checklistRepository.search("query").subscribe({ items ->
-            Timber.tag("kitek").d("Fetched items: $items ")
+            adapter.fillAdapter(items)
         }, { err ->
             Timber.tag("kitek").d("Error during fetching: $err ")
         }).addTo(subscriptions)

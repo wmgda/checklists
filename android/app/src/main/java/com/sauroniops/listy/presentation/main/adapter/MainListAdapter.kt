@@ -9,7 +9,7 @@ import com.sauroniops.listy.data.model.Checklist
 import kotlinx.android.synthetic.main.checklist_item.view.*
 
 class MainListAdapter(
-    private val checklists: List<Checklist>, private val listener: OnItemClickListener
+    private var checklists: List<Checklist>, private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<MainListAdapter.ChecklistViewHolder>() {
 
     interface OnItemClickListener {
@@ -37,4 +37,9 @@ class MainListAdapter(
     }
 
     override fun getItemCount() = checklists.size
+
+    fun fillAdapter(checklists: List<Checklist>) {
+        this.checklists = checklists
+        notifyDataSetChanged()
+    }
 }

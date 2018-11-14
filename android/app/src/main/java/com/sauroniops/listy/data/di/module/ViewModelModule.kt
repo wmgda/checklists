@@ -3,6 +3,7 @@ package com.sauroniops.listy.data.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sauroniops.listy.data.di.ViewModelFactory
+import com.sauroniops.listy.presentation.item.ItemViewModel
 import com.sauroniops.listy.presentation.main.MainViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.direct
@@ -16,6 +17,7 @@ val viewModelModule = Kodein.Module(name = "ViewModelModule") {
     bind<ViewModelProvider.Factory>() with singleton { ViewModelFactory(kodein.direct) }
 
     bindViewModel<MainViewModel>() with provider { MainViewModel(instance()) }
+    bindViewModel<ItemViewModel>() with provider { ItemViewModel(instance()) }
 }
 
 private inline fun <reified T : ViewModel> Kodein.Builder.bindViewModel(

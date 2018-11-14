@@ -1,7 +1,12 @@
 package com.sauroniops.listy.presentation.item
 
-import androidx.lifecycle.ViewModel
+import com.sauroniops.listy.data.repository.ChecklistRepository
+import com.sauroniops.listy.presentation.common.BaseViewModel
 
-class ItemViewModel : ViewModel() {
+class ItemViewModel(
+    private val repo: ChecklistRepository
+) : BaseViewModel() {
+
 
 }
+

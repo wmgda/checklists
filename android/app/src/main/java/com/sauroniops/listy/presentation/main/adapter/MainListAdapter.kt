@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.Checklist
-import com.sauroniops.listy.presentation.inflate
+import com.sauroniops.listy.presentation.common.inflate
 
 class MainListAdapter(
     private val listener: OnItemClickListener

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.ChecklistItem
 import com.sauroniops.listy.data.repository.ChecklistRepository
-import com.sauroniops.listy.presentation.addTo
+import com.sauroniops.listy.presentation.common.addTo
 import com.sauroniops.listy.presentation.item.adapter.ItemListAdapter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*

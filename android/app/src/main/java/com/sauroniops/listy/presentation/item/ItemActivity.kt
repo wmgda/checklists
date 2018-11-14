@@ -1,6 +1,7 @@
 package com.sauroniops.listy.presentation.item
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -68,6 +69,11 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCha
                 return true
             }
         }
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.item_menu, menu)
         return true
     }
 

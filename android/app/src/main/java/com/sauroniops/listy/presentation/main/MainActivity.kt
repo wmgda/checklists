@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
     }
 
     private fun setupView() {
+        setSupportActionBar(toolbar)
+
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter

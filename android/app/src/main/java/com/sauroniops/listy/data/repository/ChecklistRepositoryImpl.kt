@@ -40,6 +40,8 @@ class ChecklistRepositoryImpl(
     }
 
     override fun search(query: String): Single<List<Checklist>> {
+        Timber.tag("kitek").d("ChecklistRepository.search=$query")
+
         return Single.create { s ->
             val index = client.getIndex(BuildConfig.ALGOLIA_SEARCH_INDEX)
             val completionHandler = CompletionHandler { content, error ->

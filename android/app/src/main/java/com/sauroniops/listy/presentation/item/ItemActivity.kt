@@ -18,7 +18,7 @@ import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemClickListener {
+class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemChangedListener {
 
     private val adapter = ItemListAdapter(this)
     override val kodein: Kodein by closestKodein()
@@ -56,8 +56,8 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
         viewModel.model.observe(this, Observer { model -> this.adapter.item = model })
     }
 
-    override fun onItemClick(item: ChecklistItem) {
-        Timber.e("FunName:onItemClick *****${item.title} *****")
+    override fun onItemChange(item: ChecklistItem, isChecked: Boolean) {
+        Timber.e("FunName:onItemClick *****${item.title} | isChecked=$isChecked*****")
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
->
+        android:layout_height="wrap_content">
+
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            android:padding="0dp">
+            android:padding="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
 
-        <EditText
-                android:id="@+id/searchEditText"
+        <androidx.cardview.widget.CardView
+                app:cardCornerRadius="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="false"
+                app:cardBackgroundColor="@android:color/white"
                 android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_margin="8dp"
-                  android:background="@android:color/white"/>
+                android:layout_height="42dp">
+
+            <EditText
+                    android:id="@+id/searchEditText"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/search"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPrimary"
+                    android:theme="@style/TextLabel"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+
     </androidx.appcompat.widget.Toolbar>
 
 </com.google.android.material.appbar.AppBarLayout>

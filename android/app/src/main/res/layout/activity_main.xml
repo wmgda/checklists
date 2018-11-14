@@ -6,18 +6,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".presentation.main.MainActivity">
-    <include layout="@layout/toolbar"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"/>
 
+    <include layout="@layout/toolbar"
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/checklist_item">
-
-
-    </androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/checklist_item"/>
 
 </LinearLayout>

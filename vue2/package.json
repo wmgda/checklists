@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "buefy": "^0.7.0",
+    "firebase": "^5.5.8",
     "vue": "^2.5.17",
     "vue-instantsearch": "^1.7.0",
     "vue-router": "^3.0.1"

@@ -15,7 +15,6 @@ class MainViewModel(
     }
     val error = MutableLiveData<Throwable?>()
 
-
     fun search(query: String) {
         subscriptions.clear()
         repo.search(query).subscribe({ items ->

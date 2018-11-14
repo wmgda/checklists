@@ -7,6 +7,8 @@ import CheckListSingleView
   from './components/checkListSingleView/checkListSingleView';
 import CheckListNew from './components/checkListNew/checkListNew';
 import {Content, Image, Media} from 'react-bulma-components';
+import {Hits, InstantSearch} from 'react-instantsearch-dom';
+import CheckListItem from './components/checklist-item/checklistItem';
 
 class App extends Component {
 

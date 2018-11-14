@@ -1,22 +1,19 @@
 import React from 'react';
-import {Box, Content, Media} from 'react-bulma-components';
+import {Card, Box, Content, Media} from 'react-bulma-components';
 import {style} from './style';
 
 const CheckListItem = ({item, onPress}) => {
     return (
-      <div style={style} onClick={() => onPress(item.id)}>
-        <Box>
-          <Media>
-            <Media.Item>
-              <Content>
-                <p>
-                  <strong>{item.id}</strong> <small>{item.title}</small> <small>{item.items.length}</small>
-                </p>
-              </Content>
-            </Media.Item>
-          </Media>
-        </Box>
-      </div>
+      <Card style={style} onClick={() => onPress(item.id)}>
+        <Card.Content>
+          <p class="title">
+              { item.title } 
+            </p>
+            <p class="subtitle">
+              { item.items.slice(0, 3).map(function(item) { return item.title }).join(', ') }...
+            </p>
+        </Card.Content>
+      </Card>
     );
 };
 

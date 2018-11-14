@@ -42,7 +42,7 @@ export default {
         return;
       }
 
-      this.$snackbar.open(`You are ready to go! 🎉`)
+      this.$snackbar.open({message: `You are ready to go! 🎉`, position:'is-top-right'})
     }
   }
 }

@@ -1,60 +1,74 @@
 package com.sauroniops.listy.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.Checklist
-import com.sauroniops.listy.data.repository.ChecklistRepository
-import com.sauroniops.listy.presentation.addTo
+import com.sauroniops.listy.presentation.item.ItemActivity
 import com.sauroniops.listy.presentation.main.adapter.MainListAdapter
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
-class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener, TextWatcher {
 
     override val kodein: Kodein by closestKodein()
-    private val checklistRepository: ChecklistRepository by instance()
-    private val subscriptions = CompositeDisposable()
-    private lateinit var adapter: MainListAdapter
-
-    override fun onItemClick(item: Checklist) {
-        Timber.e("FunName:onItemClick *****${item.title} *****")
+    private val viewModeFactory: ViewModelProvider.Factory by instance()
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProviders.of(this, viewModeFactory).get(MainViewModel::class.java)
     }
+
+    private val adapter = MainListAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = MainListAdapter(
-            listOf(
-                Checklist("1", "List1", listOf()),
-                Checklist("2", "List2", listOf()),
-                Checklist("3", "List3", listOf()),
-                Checklist("4", "List4", listOf()),
-                Checklist("5", "List5", listOf())
-            ),
-            this
-        )
+        setupView()
+        registerObservers()
+    }
+
+    private fun setupView() {
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-
-
-        checklistRepository.search("query").subscribe({ items ->
-            Timber.tag("kitek").d("Fetched items: $items ")
-        }, { err ->
-            Timber.tag("kitek").d("Error during fetching: $err ")
-        }).addTo(subscriptions)
+        val itemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+        recyclerView.addItemDecoration(itemDecoration)
+        toolbar.searchEditText.addTextChangedListener(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        subscriptions.clear()
+    private fun registerObservers() {
+        viewModel.results.observe(this, Observer { adapter.items = it })
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        val query = text?.toString() ?: ""
+        viewModel.search(query)
+    }
+
+    override fun onItemClick(item: Checklist) {
+        val intent = Intent(this, ItemActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, item.id)
+        }
+        startActivity(intent)
     }
 }

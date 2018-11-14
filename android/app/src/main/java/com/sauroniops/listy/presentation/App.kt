@@ -5,6 +5,7 @@ import com.sauroniops.listy.BuildConfig
 import com.sauroniops.listy.data.di.module.androidModule
 import com.sauroniops.listy.data.di.module.repositoryModule
 import com.sauroniops.listy.data.di.module.serviceModule
+import com.sauroniops.listy.data.di.module.viewModelModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import timber.log.Timber
@@ -15,6 +16,7 @@ class App : Application(), KodeinAware {
         import(androidModule(this@App))
         import(serviceModule)
         import(repositoryModule)
+        import(viewModelModule)
     }
 
     override fun onCreate() {

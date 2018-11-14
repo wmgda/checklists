@@ -4,7 +4,7 @@ import {style} from './style';
 
 const CheckListItem = ({item}) => {
     return (
-      <Card style={style} onClick={() => onPress(item.id)}>
+      <Card style={style}>
         <Card.Content>
           <p class="title">
               { item.title } 

@@ -6,9 +6,9 @@ import com.algolia.search.saas.Query
 import com.google.gson.Gson
 import com.sauroniops.listy.BuildConfig
 import com.sauroniops.listy.data.model.Checklist
-import com.sauroniops.listy.data.model.ChecklistItem
 import com.sauroniops.listy.data.model.SearchResponse
 import io.reactivex.Single
+import timber.log.Timber
 
 class ChecklistRepositoryImpl(
     private val client: Client
@@ -17,17 +17,26 @@ class ChecklistRepositoryImpl(
     private val gson = Gson()
 
     override fun get(id: String): Single<Checklist> {
-        return Single.just(
-            Checklist(
-                "one",
-                "This is first item",
-                listOf(
-                    ChecklistItem("id-1", "Todo 1", false),
-                    ChecklistItem("id-2", "Todo 2", false),
-                    ChecklistItem("id-3", "Todo 3", false)
-                )
-            )
-        )
+        return Single.create { s ->
+            val index = client.getIndex(BuildConfig.ALGOLIA_SEARCH_INDEX)
+
+            val completionHandler = CompletionHandler { content, error ->
+                if (null != error) {
+                    if (!s.isDisposed) s.onError(error)
+                } else {
+                    Timber.e("FunName:get *****$content *****")
+                    try {
+                        val searchResponse = gson.fromJson(content.toString(), SearchResponse::class.java)
+                        val checklist = searchResponse.hits.first()
+                        Timber.e("FunName:get *****$checklist *****")
+                        if (!s.isDisposed) s.onSuccess(checklist)
+                    } catch (e: Exception) {
+                        if (!s.isDisposed) s.onError(e)
+                    }
+                }
+            }
+            index.searchAsync(Query(id).setFacets("id"), completionHandler)
+        }
     }
 
     override fun search(query: String): Single<List<Checklist>> {
@@ -39,7 +48,7 @@ class ChecklistRepositoryImpl(
                 } else {
                     try {
                         val searchResponse = gson.fromJson(content.toString(), SearchResponse::class.java)
-                        if (!s.isDisposed) s.onSuccess(searchResponse.getItems())
+                        if (!s.isDisposed) s.onSuccess(searchResponse.hits)
                     } catch (e: Exception) {
                         if (!s.isDisposed) s.onError(e)
                     }

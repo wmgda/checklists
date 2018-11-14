@@ -23,9 +23,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener,
-    TextWatcher {
-
+class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener, TextWatcher {
 
     override val kodein: Kodein by closestKodein()
     private val viewModeFactory: ViewModelProvider.Factory by instance()
@@ -33,24 +31,27 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
         ViewModelProviders.of(this, viewModeFactory).get(MainViewModel::class.java)
     }
 
-    private lateinit var adapter: MainListAdapter
+    private val adapter = MainListAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = MainListAdapter(emptyList(), this)
-        recyclerView.layoutManager = LinearLayoutManager(baseContext)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
-        toolbar.searchEditText.addTextChangedListener(this)
-        
+        setupView()
         registerObservers()
     }
 
+    private fun setupView() {
+        recyclerView.layoutManager = LinearLayoutManager(baseContext)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+        val itemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
+        recyclerView.addItemDecoration(itemDecoration)
+        toolbar.searchEditText.addTextChangedListener(this)
+    }
+
     private fun registerObservers() {
-        viewModel.results.observe(this, Observer { adapter.fillAdapter(it) })
+        viewModel.results.observe(this, Observer { adapter.items = it })
     }
 
     override fun afterTextChanged(p0: Editable?) {
@@ -60,7 +61,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
     }
 
     override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        viewModel.search(text.toString())
+        val query = text?.toString() ?: ""
+        viewModel.search(query)
     }
 
     override fun onItemClick(item: Checklist) {

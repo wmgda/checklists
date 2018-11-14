@@ -3,8 +3,12 @@
     <div class="card-content">
     <h1 class="title">{{ checklist.title }}</h1>
 
+    <progress class="progress is-success"
+      :value="checklist.items.filter(item => item.isChecked).length"
+      :max="checklist.items.length"></progress>
+
     <div v-for="item in checklist.items" :key="item.id" class="field">
-      <b-checkbox>{{ item.title }}</b-checkbox>
+      <b-checkbox v-model="item.isChecked">{{ item.title }}</b-checkbox>
     </div>
     </div>
   </div>

@@ -2,6 +2,7 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,8 +15,11 @@
             android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                tools:title="Some checklist title"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"/>
 
@@ -26,4 +30,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/checklist_item_details"/>
+
 </LinearLayout>

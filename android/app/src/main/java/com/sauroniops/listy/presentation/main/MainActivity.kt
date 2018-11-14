@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.Checklist
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
 
     override fun onItemClick(item: Checklist) {
         val intent = Intent(this, ItemActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, item.title)
+            putExtra(EXTRA_MESSAGE, item.id)
         }
         startActivity(intent)
     }
@@ -41,9 +42,11 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
 
 
-        checklistRepository.search("query").subscribe({ items ->
+
+        checklistRepository.search("").subscribe({ items ->
             adapter.fillAdapter(items)
         }, { err ->
             Timber.tag("kitek").d("Error during fetching: $err ")

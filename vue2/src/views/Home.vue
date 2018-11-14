@@ -6,7 +6,7 @@
   >
     <ais-input class="input is-large" placeholder="What do you need to be prepared for?" style="margin-top: 20px; margin-bottom: 50px"></ais-input>
 
-    <ais-results>
+    <ais-results style="margin-bottom: 50px">
       <template slot-scope="{ result }">
         <router-link :to="`/checklist/${result.objectID}`">
         <div class="card">

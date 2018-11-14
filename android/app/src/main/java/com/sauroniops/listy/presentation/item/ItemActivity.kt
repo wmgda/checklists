@@ -1,6 +1,7 @@
 package com.sauroniops.listy.presentation.item
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,9 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
 
     private fun setupView() {
         setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
@@ -54,6 +58,17 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
 
     override fun onItemClick(item: ChecklistItem) {
         Timber.e("FunName:onItemClick *****${item.title} *****")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (null == item) return false
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return true
     }
 
     companion object {

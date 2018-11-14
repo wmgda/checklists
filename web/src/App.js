@@ -7,8 +7,15 @@ import CheckListSingleView
   from './components/checkListSingleView/checkListSingleView';
 import CheckListNew from './components/checkListNew/checkListNew';
 import {Content, Image, Media} from 'react-bulma-components';
-import {Hits, InstantSearch} from 'react-instantsearch-dom';
-import CheckListItem from './components/checklist-item/checklistItem';
+import algoliasearch from 'algoliasearch'
+
+const algolia = algoliasearch(
+  'AV5HLF6Z2Q',
+  '04717f97300dd095d8358809373c61f0'
+);
+
+const index = algolia.initIndex('checklists');
+
 
 class App extends Component {
 
@@ -16,8 +23,9 @@ class App extends Component {
     super(props);
     this.state = {
       checklists: [],
-      currentSelected: 'new',
+      currentSelected: 'list',
       id: null,
+      clearedCache: new Date(),
     }
   }
 
@@ -65,8 +73,15 @@ class App extends Component {
     const db = fire.firestore();
     db.collection("/checklists").add(form)
       .then(() => {
-        this.setState({currentSelected: 'list', checklists: [...this.state.checklists, form]}, () => {
+        this.setState({checklists: [...this.state.checklists, form]}, () => {
           console.log(this.state);
+          form.objectId = form.id;
+          index.addObject(form, () => {
+            console.log('added');
+            setTimeout(() => {
+              this.setState({currentSelected: 'list'})
+            }, 1000)
+          })
         });
       });
   };
@@ -80,7 +95,7 @@ class App extends Component {
   };
 
   checkList = (opt) => (
-    <CheckList list={this.state.checklists} onPress={(id) => {
+    <CheckList clearedCache={this.state.clearedCache} list={this.state.checklists} onPress={(id) => {
       console.log(id);
       this.setState({currentSelected: 'single', id})
     }}

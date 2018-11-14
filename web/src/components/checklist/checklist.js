@@ -1,9 +1,9 @@
 import React from 'react';
 import CheckListItem from '../checklist-item/checklistItem';
 import {Button} from 'react-bulma-components/full';
-import {Hits, InstantSearch, SearchBox} from 'react-instantsearch-dom';
+import {Hits, InstantSearch, SearchBox, Configure} from 'react-instantsearch-dom';
 
-const CheckList = ({list, onPress, addNew}) => {
+const CheckList = ({list, onPress, addNew, clearedCache}) => {
   const checkList = ({hit}) => (
     <CheckListItem item={hit} onPress={(id) => onPress(id)}/>
   );

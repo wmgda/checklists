@@ -8,7 +8,7 @@
       :max="checklist.items.length"></progress>
 
     <div v-for="item in checklist.items" :key="item.id" class="field">
-      <b-checkbox v-model="item.isChecked">{{ item.title }}</b-checkbox>
+      <b-checkbox v-model="item.isChecked" @input="handleChange">{{ item.title }}</b-checkbox>
     </div>
     </div>
   </div>
@@ -35,6 +35,15 @@ export default {
     db.collection("checklists").doc(this.$route.params.id).get().then((doc) => {
         this.checklist = doc.data();
     });
+  },
+  methods: {
+    handleChange: function() {
+      if (this.checklist.items.filter(item => item.isChecked).length !== this.checklist.items.length) {
+        return;
+      }
+
+      this.$snackbar.open(`You are ready to go! 🎉`)
+    }
   }
 }
 </script>

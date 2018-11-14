@@ -14,14 +14,25 @@ class MainViewModel(
         MutableLiveData<List<Checklist>>().apply { search("") }
     }
     val error = MutableLiveData<Throwable?>()
+    val isLoading = MutableLiveData<Boolean>()
+    private var lastQuery: String? = null
 
     fun search(query: String) {
+        if (this.lastQuery == query) {
+            this.isLoading.value = false
+            return
+        }
+
         subscriptions.clear()
+        this.isLoading.value = true
         repo.search(query).subscribe({ items ->
+            this.lastQuery = query
             this.results.value = items
             this.error.value = null
+            this.isLoading.value = false
         }, { err ->
             this.error.value = err
+            this.isLoading.value = false
         }).addTo(subscriptions)
     }
 }

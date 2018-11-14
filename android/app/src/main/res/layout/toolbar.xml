@@ -27,8 +27,8 @@
 
             <EditText
                     android:id="@+id/searchEditText"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
                     style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                     android:imeOptions="actionSearch"
                     android:inputType="textNoSuggestions"
                     android:maxLines="1"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/text_primary"
                     android:theme="@style/TextLabel"/>
 
         </androidx.cardview.widget.CardView>

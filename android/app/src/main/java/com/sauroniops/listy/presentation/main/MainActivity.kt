@@ -56,10 +56,8 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
     }
 
     private fun registerObservers() {
-        viewModel.results.observe(this, Observer {
-            adapter.items = it
-            refreshLayout.isRefreshing = false
-        })
+        viewModel.results.observe(this, Observer { adapter.items = it })
+        viewModel.isLoading.observe(this, Observer { isLoading -> refreshLayout.isRefreshing = isLoading })
     }
 
     override fun onRefresh() {

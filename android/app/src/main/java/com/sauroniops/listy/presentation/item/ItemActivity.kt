@@ -2,7 +2,6 @@ package com.sauroniops.listy.presentation.item
 
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sauroniops.listy.R
@@ -13,7 +12,6 @@ import com.sauroniops.listy.presentation.item.adapter.ItemListAdapter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -33,7 +31,7 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.item_activity)
 
         if (intent.hasExtra(EXTRA_MESSAGE)) {
             val id = intent.getStringExtra(EXTRA_MESSAGE)
@@ -46,7 +44,7 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
                 Timber.tag("kitek").d("Error during fetching: $err ")
             }).addTo(subscriptions)
         }
-        toolbar.searchEditText.visibility = View.GONE
+//        toolbar.searchEditText.visibility = View.GONE
 
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)

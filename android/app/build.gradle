@@ -11,7 +11,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ALGOLIA_APP_ID", '"af1ff1cbe35aac61ee4fa9622a1fd2ec"'
+        buildConfigField "String", "ALGOLIA_APP_KEY", '"AV5HLF6Z2Q"'
     }
+
     buildTypes {
         release {
             minifyEnabled false

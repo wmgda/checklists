@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { fire } from './fire';
 
 class App extends Component {
+
+  componentDidMount() {
+    console.log('xd');
+    const db = fire.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    const userRef = db.collection('/checklists');
+    console.log(userRef);
+    userRef.get()
+      .then((data) => {
+        console.log(data.docs);
+        data.forEach(val => {
+          console.log(val);
+        })
+      })
+  }
+
   render() {
     return (
       <div className="App">

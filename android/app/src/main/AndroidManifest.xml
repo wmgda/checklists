@@ -15,7 +15,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".presentation.main.MainActivity">
+        <activity android:name=".presentation.main.MainActivity"
+                  android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

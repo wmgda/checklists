@@ -38,8 +38,10 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
         if (intent.hasExtra(EXTRA_MESSAGE)) {
             val id = intent.getStringExtra(EXTRA_MESSAGE)
             checklistRepository.get(id).subscribe({ item ->
+                Timber.e("FunName:onCreate *****subscribed *****")
                 toolbar.title = item.title
                 adapter = ItemListAdapter(item, this)
+                recyclerView.adapter = adapter
             }, { err ->
                 Timber.tag("kitek").d("Error during fetching: $err ")
             }).addTo(subscriptions)
@@ -48,7 +50,6 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
 
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
     }
 
     override fun onDestroy() {

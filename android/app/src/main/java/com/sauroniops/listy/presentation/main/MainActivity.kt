@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.Checklist
 import com.sauroniops.listy.presentation.item.ItemActivity
@@ -23,7 +24,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener, TextWatcher {
+class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemClickListener, TextWatcher,
+    SwipeRefreshLayout.OnRefreshListener {
 
     override val kodein: Kodein by closestKodein()
     private val viewModeFactory: ViewModelProvider.Factory by instance()
@@ -48,10 +50,20 @@ class MainActivity : AppCompatActivity(), KodeinAware, MainListAdapter.OnItemCli
         val itemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
         recyclerView.addItemDecoration(itemDecoration)
         toolbar.searchEditText.addTextChangedListener(this)
+
+        refreshLayout.setOnRefreshListener(this)
     }
 
     private fun registerObservers() {
-        viewModel.results.observe(this, Observer { adapter.items = it })
+        viewModel.results.observe(this, Observer {
+            adapter.items = it
+            refreshLayout.isRefreshing = false
+        })
+    }
+
+    override fun onRefresh() {
+        val query = toolbar.searchEditText.text.toString()
+        viewModel.search(query)
     }
 
     override fun afterTextChanged(p0: Editable?) {

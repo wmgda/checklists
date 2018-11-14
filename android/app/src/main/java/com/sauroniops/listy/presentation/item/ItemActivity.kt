@@ -9,7 +9,6 @@ import com.sauroniops.listy.R
 import com.sauroniops.listy.data.model.ChecklistItem
 import com.sauroniops.listy.data.repository.ChecklistRepository
 import com.sauroniops.listy.presentation.addTo
-import org.kodein.di.generic.instance
 import com.sauroniops.listy.presentation.item.adapter.ItemListAdapter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,6 +17,7 @@ import kotlinx.android.synthetic.main.toolbar.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 import timber.log.Timber
 
 class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemClickListener {

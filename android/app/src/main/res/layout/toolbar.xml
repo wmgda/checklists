@@ -40,7 +40,6 @@
                     android:textColor="@color/colorPrimary"
                     android:theme="@style/TextLabel"/>
 
-
         </androidx.cardview.widget.CardView>
 
 

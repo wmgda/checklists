@@ -1,9 +1,11 @@
 <template>
-  <div class="about">
-    <h1>{{ checklist.title }}</h1>
+  <div class="card">
+    <div class="card-content">
+    <h1 class="title">{{ checklist.title }}</h1>
 
-    <div v-for="item in checklist.items" :key="item.id">
-      {{ item.title }}
+    <div v-for="item in checklist.items" :key="item.id" class="field">
+      <b-checkbox>{{ item.title }}</b-checkbox>
+    </div>
     </div>
   </div>
 </template>

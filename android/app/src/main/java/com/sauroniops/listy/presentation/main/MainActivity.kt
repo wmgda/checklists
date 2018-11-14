@@ -1,7 +1,8 @@
-package com.sauroniops.listy
+package com.sauroniops.listy.presentation.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.sauroniops.listy.R
 
 class MainActivity : AppCompatActivity() {
 

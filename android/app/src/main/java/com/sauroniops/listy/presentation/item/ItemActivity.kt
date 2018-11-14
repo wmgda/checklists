@@ -35,7 +35,6 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         if (intent.hasExtra(EXTRA_MESSAGE)) {
             val id = intent.getStringExtra(EXTRA_MESSAGE)
             checklistRepository.get(id).subscribe({ item ->
@@ -50,7 +49,6 @@ class ItemActivity : AppCompatActivity(), KodeinAware, ItemListAdapter.OnItemCli
         recyclerView.layoutManager = LinearLayoutManager(baseContext)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-
     }
 
     override fun onDestroy() {

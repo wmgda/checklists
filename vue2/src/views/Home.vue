@@ -8,7 +8,7 @@
 
     <ais-results>
       <template slot-scope="{ result }">
-        <router-link :to="`/checklist/${result.id}`">
+        <router-link :to="`/checklist/${result.objectID}`">
         <div class="card">
           <div class="card-content">
             <p class="title">

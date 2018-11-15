@@ -25,7 +25,6 @@ class ItemViewModel(
 
     fun toggleCheckbox(checkboxId: String, isChecked: Boolean) {
         repo.updateChecked(id, checkboxId, isChecked).subscribe({ item ->
-            this.model.value = item
             this.error.value = null
         }, { err ->
             this.error.value = err
